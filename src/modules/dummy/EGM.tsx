@@ -26,6 +26,7 @@ const EGM = () => {
   return (
     <div>
       <Header pageName='EGM' label='EGM Data' />
+      <h1>This is a dummy new heading</h1>
       <Breadcrumb items={breadcrumbItems} />
       <Table
         columns={egmColumns}
