@@ -15,13 +15,10 @@ const DashboardPage = () => {
   const [selected, setSelected] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log(selected);
-
   const handleSelect = (val: string) => {
     setSelected((prev) =>
       prev.includes(val) ? prev.filter((v) => v !== val) : [...prev, val]
     );
-
   };
 
   return (
@@ -31,7 +28,7 @@ const DashboardPage = () => {
       <MultiSelectInput
         label="Select Fruits"
         options={fruitOptions}
-        name='Search'
+        name="Search"
         selectedValues={selected}
         onSelect={handleSelect}
         inputValue={input}
