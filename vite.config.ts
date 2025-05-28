@@ -13,6 +13,9 @@ export default defineConfig({
       "@context": path.resolve(__dirname, "src/context"),
       "@modules": path.resolve(__dirname, "src/modules"),
       "@generator": path.resolve(__dirname, "src/generator"),
+      "@api": path.resolve(__dirname, "src/api"),
+      "@lib": path.resolve(__dirname, "src/lib"),
+      "@blocks": path.resolve(__dirname, "src/blocks"),
     },
   },
   css: {

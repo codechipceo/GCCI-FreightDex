@@ -1,109 +1,116 @@
-import { FieldSchema } from "@generator/form/index.types";
-import { Checkbox } from "@shared/components";
-import Column from "@shared/components/Column";
-import { ColumnDef } from "@tanstack/react-table";
-import { useMemo } from "react";
-export interface User {
-  id: string;
-  company_name: string;
-  vendor_type: string;
-  city: string;
-  pin_code: string;
-  country: string;
-  telephone: string;
-  mobile_number: string;
-  gst_number: string;
-  pan_number: string;
-  fax: number;
-}
+import { FieldSchema } from '@generator/form/index.types';
+import { Checkbox } from '@shared/components';
+import Column from '@shared/components/Column';
+import { ColumnDef } from '@tanstack/react-table';
+import { EVendor, IVendor, VendorType } from '../index.types';
 
 export const useVendorPage = () => {
+  const payload: IVendor = {
+    vendor_name: '',
+    _id: '',
+    vendor_type: [] as VendorType[],
+    locations: [
+      {
+        city: '',
+        country: '',
+        state: '',
+        pan_number: '',
+        address: '',
+        gst_number: '',
+        fax: '',
+        mobile_number: '',
+        pin_code: '',
+        telephone: '',
+      },
+    ],
+  };
+
   const formSchema: FieldSchema[] = [
     {
-      name: "vendor_name",
-      label: "Vendor Name",
-      type: "text",
+      name: EVendor.vendor_name,
+      label: 'Vendor Name',
+      type: 'text',
       required: true,
     },
-
     {
-      name: "vendor_type",
-      label: "Vendor Type",
-      type: "multiselect",
+      name: EVendor.vendor_type,
+      label: 'Vendor Type',
+      type: 'multiselect',
       options: [
-        { label: "Shipper", value: "shipper" },
-        { label: "Consignee", value: "consignee" },
-        { label: "Shipping Line", value: "shipping_line" },
-        { label: "Freight Forwarder", value: "freight_forwarder" },
-        { label: "Agent", value: "agent" },
-        { label: "CHA", value: "cha" },
+        { label: 'Shipper', value: 'shipper' },
+        { label: 'Consignee', value: 'consignee' },
+        { label: 'Shipping Line', value: 'shipping_line' },
+        { label: 'Freight Forwarder', value: 'freight_forwarder' },
+        { label: 'Agent', value: 'agent' },
+        { label: 'CHA', value: 'cha' },
       ],
     },
     {
-      name: "locations",
-      label: "Locations",
-      type: "array",
+      name: 'locations',
+      label: 'Locations',
+      type: 'array',
+      required: true,
       item: {
-        type: "group",
+        type: 'group',
         fields: [
           {
-            name: "city",
-            label: "City",
-            type: "text",
+            name: EVendor.city,
+            label: 'City',
+            type: 'text',
             required: true,
           },
           {
-            name: "address",
-            label: "Address",
-            type: "text",
+            name: EVendor.address,
+            label: 'Address',
+            type: 'text',
             required: true,
           },
           {
-            name: "state",
-            label: "State",
-            type: "text",
+            name: EVendor.state,
+            label: 'State',
+            type: 'text',
             required: true,
           },
           {
-            name: "country",
-            label: "Country",
-            type: "text",
+            name: EVendor.country,
+            label: 'Country',
+            type: 'text',
             required: true,
           },
           {
-            name: "pincode",
-            label: "Pin Code",
-            type: "text",
+            name: EVendor.pin_code,
+            label: 'Pin Code',
+            type: 'text',
             required: true,
           },
           {
-            name: "telephone",
-            label: "Telephone",
-            type: "text",
+            name: EVendor.telephone,
+            label: 'Telephone',
+            type: 'text',
             required: true,
           },
           {
-            name: "mobile",
-            label: "Mobile Number",
-            type: "text",
+            name: EVendor.mobile_number,
+            label: 'Mobile Number',
+            type: 'text',
             required: true,
           },
           {
-            name: "fax",
-            label: "FAX",
-            type: "text",
+            name: EVendor.fax,
+            label: 'FAX',
+            type: 'text',
             required: true,
           },
           {
-            name: "gst_number",
-            label: "GST Number",
-            type: "text",
+            name: EVendor.gst_number,
+            label: 'GST Number',
+            type: 'text',
             required: true,
           },
           {
-            name: "pan_number",
-            label: "Pan Number",
-            type: "text",
+            name: EVendor.pan_number,
+            label: 'Pan Number',
+            type: 'text',
             required: true,
           },
         ],
@@ -111,38 +118,12 @@ export const useVendorPage = () => {
     },
   ];
 
-  const generateDummyData = (count: number) => {
-    const statuses = ["Single", "In Relationship", "Complicated", "Married"];
-    return Array.from({ length: count }, (_, i) => ({
-      company_name: `First${i + 1} long String Content to show in column`,
-      vendor_type: statuses[Math.floor(Math.random() * statuses.length)],
-      city: statuses[Math.floor(Math.random() * statuses.length)],
-      pin_code: statuses[Math.floor(Math.random() * statuses.length)],
-      country: statuses[Math.floor(Math.random() * statuses.length)],
-      telephone: statuses[Math.floor(Math.random() * statuses.length)],
-
-      mobile_number: statuses[Math.floor(Math.random() * statuses.length)], // Random status
-      gst_number: String(Math.floor(Math.random() * 100)), // Progress between 0-100
-      id: String(i + 10),
-      pan_number: String(Math.floor(Math.random() * 100)),
-      fax: Math.floor(Math.random() * 100),
-    }));
-  };
-  const data = useMemo(() => {
-    return generateDummyData(50);
-  }, []);
-
-  const columns: ColumnDef<User>[] = [
+  const columns: ColumnDef<IVendor>[] = [
     {
-      id: "id",
+      id: '_id',
       size: 4,
       header: ({ table }) => {
-        return (
-          <Checkbox
-            checked={Boolean(table.getIsAllRowsSelected())}
-            onChange={table.getToggleAllRowsSelectedHandler()}
-          />
-        );
+        return <Checkbox checked={Boolean(table.getIsAllRowsSelected())} onChange={table.getToggleAllRowsSelectedHandler()} />;
       },
 
       cell: ({ row }) => (
@@ -157,63 +138,70 @@ export const useVendorPage = () => {
     },
 
     {
-      accessorKey: "company_name",
-      header: ({ header }) => <Column header={header} title={"Company Name"} />,
+      accessorKey: EVendor.vendor_name,
+      header: ({ header }) => <Column header={header} title={'Vendor Name'} />,
     },
     {
-      accessorKey: "vendor_type",
-      header: ({ header }) => <Column header={header} title={"Vendor Type"} />,
+      accessorKey: EVendor.vendor_type,
+      header: ({ header }) => <Column header={header} title={'Vendor Type'} />,
     },
     {
-      accessorKey: "city",
-      header: ({ header }) => <Column header={header} title={"City"} />,
+      accessorKey: EVendor.city,
+      header: ({ header }) => <Column header={header} title={'City'} />,
+      cell: ({ row }) => <div>{row.original.locations[0]?.city}</div>,
     },
 
     {
-      accessorKey: "pin_code",
+      accessorKey: EVendor.pin_code,
       header: () => <button>Pin Code</button>,
+      enableSorting: false,
 
-      cell: ({ row }) => <div>{row.original.pin_code}</div>,
+      cell: ({ row }) => <div>{row.original.locations[0]?.pin_code}</div>,
     },
     {
-      accessorKey: "country",
+      accessorKey: EVendor.country,
       header: () => <button>Country</button>,
+      enableSorting: false,
 
-      cell: ({ row }) => <div>{row.original.country}</div>,
+      cell: ({ row }) => <div>{row.original.locations[0]?.country}</div>,
     },
     {
-      accessorKey: "telephone",
+      accessorKey: EVendor.telephone,
       header: () => <button>Telephone</button>,
+      enableSorting: false,
 
-      cell: ({ row }) => <div>{row.original.telephone}</div>,
+      cell: ({ row }) => <div>{row.original.locations[0]?.telephone}</div>,
     },
     {
-      accessorKey: "mobile_number",
+      accessorKey: EVendor.mobile_number,
       header: () => <button>Mobile</button>,
+      enableSorting: false,
 
-      cell: ({ row }) => <div>{row.original.mobile_number}</div>,
+      cell: ({ row }) => <div>{row.original.locations[0].mobile_number}</div>,
     },
     {
-      accessorKey: "fax",
+      accessorKey: EVendor.fax,
       header: () => <button>Fax</button>,
+      enableSorting: false,
 
-      cell: ({ row }) => <div>{row.original.fax}</div>,
+      cell: ({ row }) => <div>{row.original.locations[0].fax}</div>,
     },
     {
-      accessorKey: "gst_number",
+      accessorKey: EVendor.gst_number,
       header: () => <button>GST</button>,
+      enableSorting: false,
 
-      cell: ({ row }) => <div>{row.original.gst_number}</div>,
+      cell: ({ row }) => <div>{row.original.locations[0].gst_number}</div>,
     },
     {
-      accessorKey: "pan_number",
+      accessorKey: EVendor.pan_number,
       header: () => <button>PAN</button>,
-
-      cell: ({ row }) => <div>{row.original.pan_number}</div>,
+      cell: ({ row }) => <div>{row.original.locations[0].pan_number}</div>,
+      enableSorting: false,
     },
   ];
 
-  return { formSchema, data, columns };
+  return { formSchema, columns, payload };
 };
 
 export default useVendorPage;
